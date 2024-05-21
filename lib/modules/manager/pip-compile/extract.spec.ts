@@ -56,12 +56,21 @@ describe('modules/manager/pip-compile/extract', () => {
       expect(packageFile?.deps[0]).toHaveProperty('depName', 'celery');
     });
 
+    it('returns object for pyproject.toml', () => {
+      const packageFile = extractPackageFile(
+        Fixtures.get('pyproject.toml'),
+        'pyproject.toml',
+        {},
+      );
+      expect(packageFile).toHaveProperty('deps');
+      expect(packageFile?.deps[0]).toHaveProperty('depName', 'attrs');
+    });
+
     it.each([
       'random.py',
       'app.cfg',
       'already_locked.txt',
       // TODO(not7cd)
-      'pyproject.toml',
       'setup.cfg',
     ])('returns null on not supported package files', (file: string) => {
       expect(extractPackageFile('some content', file, {})).toBeNull();
