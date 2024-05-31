@@ -3,9 +3,9 @@ import { logger } from '../../../logger';
 import { readLocalFile } from '../../../util/fs';
 import { ensureLocalPath } from '../../../util/fs/util';
 import { normalizePythonDepName } from '../../datasource/pypi/common';
+import { extractPackageFile as extractPyProjectTomlFile } from '../pep621';
 import { extractPackageFile as extractRequirementsFile } from '../pip_requirements/extract';
 import { extractPackageFile as extractSetupPyFile } from '../pip_setup';
-import { extractPackageFile as extractPyProjectTomlFile } from '../pep621';
 import type {
   ExtractConfig,
   PackageDependency,

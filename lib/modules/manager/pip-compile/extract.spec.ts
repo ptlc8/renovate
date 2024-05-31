@@ -36,8 +36,8 @@ describe('modules/manager/pip-compile/extract', () => {
   });
 
   describe('extractPackageFile()', () => {
-    it('returns object for requirements.in', () => {
-      const packageFile = extractPackageFile(
+    it('returns object for requirements.in', async () => {
+      const packageFile = await extractPackageFile(
         Fixtures.get('requirementsWithHashes.txt'),
         'requirements.in',
         {},
@@ -46,8 +46,8 @@ describe('modules/manager/pip-compile/extract', () => {
       expect(packageFile?.deps[0]).toHaveProperty('depName', 'attrs');
     });
 
-    it('returns object for setup.py', () => {
-      const packageFile = extractPackageFile(
+    it('returns object for setup.py', async () => {
+      const packageFile = await extractPackageFile(
         Fixtures.get('setup.py', '../pip_setup'),
         'lib/setup.py',
         {},
@@ -56,9 +56,9 @@ describe('modules/manager/pip-compile/extract', () => {
       expect(packageFile?.deps[0]).toHaveProperty('depName', 'celery');
     });
 
-    it('returns object for pyproject.toml', () => {
-      const packageFile = extractPackageFile(
-        Fixtures.get('pyproject.toml'),
+    it('returns object for pyproject.toml', async () => {
+      const packageFile = await extractPackageFile(
+        Fixtures.get('pyproject_pdm_sources.toml', '../pep621'),
         'pyproject.toml',
         {},
       );
@@ -72,8 +72,8 @@ describe('modules/manager/pip-compile/extract', () => {
       'already_locked.txt',
       // TODO(not7cd)
       'setup.cfg',
-    ])('returns null on not supported package files', (file: string) => {
-      expect(extractPackageFile('some content', file, {})).toBeNull();
+    ])('returns null on not supported package files', async (file: string) => {
+      expect(await extractPackageFile('some content', file, {})).toBeNull();
     });
   });
 
